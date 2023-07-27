@@ -15,12 +15,12 @@ class GeneralController extends Controller
    public function index(Request $request)
    {
       $sellerModel = new Seller();
-
+      $a = 'asd';
       $seller = "";
       if ($idSeller = $request->session()->get('id_seller')) {
          $seller = $sellerModel->getOneSeller($idSeller);
       }
-      
+
       return view('index', compact('seller'));
    }
 
@@ -30,13 +30,13 @@ class GeneralController extends Controller
    public function register()
    {
       $marketplaces = Marketplace::all(['id_marketplace', 'country']);
-      
+
       return view('authentificate.register', compact('marketplaces'));
    }
 
    /**
    * Store a newly created Seller in storage.
-   * 
+   *
    * @param object \Illuminate\Http\Request $request
    */
    public function store(Request $request)
@@ -53,7 +53,7 @@ class GeneralController extends Controller
          'created_at' => date('y.m.d H:i:s', strtotime('+3 hour')),
          'updated_at' => date('y.m.d H:i:s', strtotime('+3 hour')),
       ];
-      
+
       $idNewSeller = $sellerModel->storeSeller($setSellerData);
       $setSellerPasswordData = [
          'id_seller' => $idNewSeller,
@@ -70,7 +70,7 @@ class GeneralController extends Controller
 
    /**
    * Login Seller into Personal Page.
-   * 
+   *
    * @param object \Illuminate\Http\Request $request
    */
    public function auth(Request $request)
@@ -91,17 +91,17 @@ class GeneralController extends Controller
 
          if (!empty($idAuthSeller)) {
             $request->session()->put('id_seller', $idAuthSeller);
-            
+
             return redirect()->route('personal');
          }
       }
-      
+
       return view('authentificate.login');
    }
 
    /**
    * Logout Seller from Site.
-   * 
+   *
    * @param object \Illuminate\Http\Request $request
    */
    public function logout(Request $request)
